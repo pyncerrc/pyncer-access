@@ -1,5 +1,5 @@
 <?php
-namespace Pyncer\Auth;
+namespace Pyncer\Access;
 
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Pyncer\Data\Model\ModelInterface;

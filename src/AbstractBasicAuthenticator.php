@@ -1,9 +1,9 @@
 <?php
-namespace Pyncer\Auth;
+namespace Pyncer\Access;
 
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
-use Pyncer\Auth\AbstractAuthenticator;
+use Pyncer\Access\AbstractAuthenticator;
 use Pyncer\Data\Model\ModelInterface;
 use Pyncer\Http\Message\Response;
 use Pyncer\Http\Message\Status;

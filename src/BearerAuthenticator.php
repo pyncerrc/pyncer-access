@@ -1,8 +1,8 @@
 <?php
-namespace Pyncer\Auth;
+namespace Pyncer\Access;
 
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
-use Pyncer\Auth\AbstractBearerAuthenticator;
+use Pyncer\Access\AbstractBearerAuthenticator;
 use Pyncer\Data\Mapper\MapperAdaptorInterface;
 
 class BearerAuthenticator extends AbstractBearerAuthenticator
@@ -30,6 +30,8 @@ class BearerAuthenticator extends AbstractBearerAuthenticator
         if (!$tokenModel) {
             return false;
         }
+
+        $this->tokenModel = $tokenModel;
 
         $token = $this->tokenMapperAdaptor->getFormatter()->unformatData(
             $tokenModel->getData()

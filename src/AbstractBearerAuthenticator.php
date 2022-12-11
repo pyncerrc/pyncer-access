@@ -1,9 +1,9 @@
 <?php
-namespace Pyncer\Auth;
+namespace Pyncer\Access;
 
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
-use Pyncer\Auth\AbstractAuthenticator;
+use Pyncer\Access\AbstractAuthenticator;
 use Pyncer\Data\Model\ModelInterface;
 use Pyncer\Http\Message\Response;
 use Pyncer\Http\Message\Status;
@@ -17,7 +17,7 @@ use function Pyncer\nullify as pyncer_nullify;
 
 abstract class AbstractBearerAuthenticator extends AbstractAuthenticator
 {
-    protected array $scopes = [];
+    protected ?ModelInterface $tokenModel = null;
 
     public function __construct(
         PsrServerRequestInterface $request,
@@ -26,20 +26,9 @@ abstract class AbstractBearerAuthenticator extends AbstractAuthenticator
         parent::__construct($request, 'Bearer', $realm);
     }
 
-    public function getScopes(): array
+    public function getToken(): ?ModelInterface
     {
-        return $this->scopes;
-    }
-
-    public function hasScopes(string ...$scopes): bool
-    {
-        foreach ($scopes as $scope) {
-            if (!in_array($this->getScopes(), $scope)) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->tokenModel;
     }
 
     public function getResponse(
@@ -78,14 +67,14 @@ abstract class AbstractBearerAuthenticator extends AbstractAuthenticator
         array $params = [],
     ): PsrResponseInterface
     {
-        $description = $params['description'] ?? null;
+        $description = $params['error_description'] ?? null;
         $scopes = null;
 
         if ($status === Status::CLIENT_ERROR_400_BAD_REQUEST) {
-            $description ??= 'The authorization header is invalid';
+            $description ??= 'The authorization header is invalid.';
             $error = 'invalid_request';
         } elseif ($status === Status::CLIENT_ERROR_403_FORBIDDEN) {
-            $description ??= 'The authorization token has insufficient scope';
+            $description ??= 'The authorization token has insufficient scope.';
 
             $scopes = pyncer_nullify($scopes);
             if ($scopes === null) {
@@ -98,7 +87,7 @@ abstract class AbstractBearerAuthenticator extends AbstractAuthenticator
 
             $error = 'insufficient_scope';
         } else { // 401
-            $description ??= 'The auththorization token is expired, revoked, or invalid';
+            $description ??= 'The auththorization token is expired, revoked, or invalid.';
             $error = 'invalid_token';
         }
 

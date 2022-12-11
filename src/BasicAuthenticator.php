@@ -1,8 +1,8 @@
 <?php
-namespace Pyncer\Auth;
+namespace Pyncer\Access;
 
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
-use Pyncer\Auth\AbstractBasicAuthenticator;
+use Pyncer\Access\AbstractBasicAuthenticator;
 use Pyncer\Data\Mapper\MapperAdaptorInterface;
 
 class BasicAuthenticator extends AbstractBasicAuthenticator

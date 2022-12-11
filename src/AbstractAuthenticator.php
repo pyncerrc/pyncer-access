@@ -1,10 +1,10 @@
 <?php
-namespace Pyncer\Auth;
+namespace Pyncer\Access;
 
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
 use Psr\Log\LoggerAwareInterface as PsrLoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait as PsrLoggerAwareTrait;
-use Pyncer\Auth\AuthenticatorInterface;
+use Pyncer\Access\AuthenticatorInterface;
 use Pyncer\Data\Model\ModelInterface;
 
 use function in_array;
