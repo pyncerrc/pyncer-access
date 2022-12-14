@@ -4,14 +4,20 @@ namespace Pyncer\Access;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
 use Pyncer\Access\AbstractAuthenticator;
+use Pyncer\Access\BasicAuthenticatorInterface;
 use Pyncer\Data\Model\ModelInterface;
 use Pyncer\Http\Message\Response;
 use Pyncer\Http\Message\Status;
 use Pyncer\Http\Server\RequestHandlerInterface;
 
+use function base64_encode;
+use function count;
+use function explode;
+
 use const Pyncer\ENCODING as PYNCER_ENCODING;
 
-abstract class AbstractBasicAuthenticator extends AbstractAuthenticator
+abstract class AbstractBasicAuthenticator extends AbstractAuthenticator implements
+    BasicAuthenticatorInterface
 {
     public function __construct(
         PsrServerRequestInterface $request,

@@ -16,7 +16,7 @@ class BearerAuthenticator extends AbstractBearerAuthenticator
         parent::__construct($request, $realm);
     }
 
-    protected function authenticate(string $token): bool
+    public function authenticate(string $token): bool
     {
         $tokenModel = $this->tokenMapperAdaptor->getMapper()->selectByColumns(
             $this->tokenMapperAdaptor->getFormatter()->formatData([

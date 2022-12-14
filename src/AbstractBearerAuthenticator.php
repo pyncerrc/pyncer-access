@@ -4,6 +4,7 @@ namespace Pyncer\Access;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
 use Pyncer\Access\AbstractAuthenticator;
+use Pyncer\Access\BearerAuthenticatorInterface;
 use Pyncer\Data\Model\ModelInterface;
 use Pyncer\Http\Message\Response;
 use Pyncer\Http\Message\Status;
@@ -15,7 +16,8 @@ use function implode;
 use function is_array;
 use function Pyncer\nullify as pyncer_nullify;
 
-abstract class AbstractBearerAuthenticator extends AbstractAuthenticator
+abstract class AbstractBearerAuthenticator extends AbstractAuthenticator implements
+    BearerAuthenticatorInterface
 {
     protected ?ModelInterface $tokenModel = null;
 
@@ -59,8 +61,6 @@ abstract class AbstractBearerAuthenticator extends AbstractAuthenticator
 
         return null;
     }
-
-    protected abstract function authenticate(string $token): bool;
 
     public function getChallengeResponse(
         Status $status,

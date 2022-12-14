@@ -15,7 +15,7 @@ class BasicAuthenticator extends AbstractBasicAuthenticator
         parent::__construct($request, $realm);
     }
 
-    protected function authenticate(string $username, string $password): bool
+    public function authenticate(string $username, string $password): bool
     {
         $userModel = $this->userMapperAdaptor->getMapper()->selectByColumns(
             $this->userMapperAdaptor->getFormatter()->formatData([
