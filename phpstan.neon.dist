@@ -1,0 +1,26 @@
+parameters:
+    checkMissingIterableValueType: false
+    level: max
+    paths:
+        - src
+    ignoreErrors:
+        -
+            message: "#^Used constant Pyncer\\\\ENCODING not found\\.$#"
+            count: 1
+            path: src/AbstractBasicAuthenticator.php
+        -
+            message: "#^Constant Pyncer\\\\ENCODING not found\\.$#"
+            count: 1
+            path: src/AbstractBasicAuthenticator.php
+        -
+            message: "#^Used constant Pyncer\\\\DATE_TIME_NOW not found\\.$#"
+            count: 1
+            path: src/BearerAuthenticator.php
+        -
+            message: "#^Constant Pyncer\\\\DATE_TIME_NOW not found\\.$#"
+            count: 1
+            path: src/BearerAuthenticator.php
+        -
+            message: "#^Parameter \\#1 \\$id of method Pyncer\\\\Data\\\\Mapper\\\\MapperInterface::selectById\\(\\) expects int, mixed given\\.$#"
+            count: 1
+            path: src/BearerAuthenticator.php

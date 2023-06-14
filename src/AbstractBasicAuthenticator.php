@@ -55,7 +55,7 @@ abstract class AbstractBasicAuthenticator extends AbstractAuthenticator implemen
             );
         }
 
-        if (!$auth->authenticate($credentials[0], $credentials[1])) {
+        if (!$this->authenticate($credentials[0], $credentials[1])) {
             return $this->getChallengeResponse(
                 Status::CLIENT_ERROR_401_UNAUTHORIZED
             );
@@ -65,11 +65,6 @@ abstract class AbstractBasicAuthenticator extends AbstractAuthenticator implemen
 
         return null;
     }
-
-    protected abstract function authenticate(
-        string $username,
-        string $password
-    ): bool;
 
     public function getChallengeResponse(
         Status $status,

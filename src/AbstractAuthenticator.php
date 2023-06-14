@@ -16,6 +16,7 @@ abstract class AbstractAuthenticator implements
     use PsrLoggerAwareTrait;
 
     protected ?ModelInterface $userModel = null;
+    protected ?ModelInterface $guestUserModel = null;
     protected bool $hasAuthenticated = false;
 
     public function __construct(
@@ -36,7 +37,7 @@ abstract class AbstractAuthenticator implements
 
     public function getUser(): ?ModelInterface
     {
-        return $this->userModel;
+        return $this->userModel ?? $this->guestUserModel;
     }
 
     public function getUserId(): ?int
@@ -51,12 +52,12 @@ abstract class AbstractAuthenticator implements
 
     public function isUser(): bool
     {
-        return ($this->getUser() !== null);
+        return ($this->userModel !== null);
     }
 
     public function isGuest(): bool
     {
-        return ($this->getUser() === null);
+        return ($this->userModel === null);
     }
 
     public function hasAuthenticated(): bool

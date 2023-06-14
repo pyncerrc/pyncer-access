@@ -11,8 +11,14 @@ class BasicAuthenticator extends AbstractBasicAuthenticator
         protected MapperAdaptorInterface $userMapperAdaptor,
         PsrServerRequestInterface $request,
         string $realm,
+        protected ?int $guestUserId = null,
     ) {
         parent::__construct($request, $realm);
+    }
+
+    public function getGuestUserId(): ?int
+    {
+        return $this->guestUserId;
     }
 
     public function authenticate(string $username, string $password): bool
@@ -26,6 +32,13 @@ class BasicAuthenticator extends AbstractBasicAuthenticator
         );
 
         if (!$userModel) {
+            if ($this->guestUserId) {
+                $this->guestUserModel = $this->userMapperAdaptor->getMapper()->selectById(
+                    $this->guestUserId,
+                    $this->userMapperAdaptor->getMapperQuery()
+                );
+            }
+
             return false;
         }
 
