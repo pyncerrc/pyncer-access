@@ -1,9 +1,11 @@
 <?php
 namespace Pyncer\Access;
 
+use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as PsrServerRequestInterface;
 use Pyncer\Access\AbstractBearerAuthenticator;
 use Pyncer\Data\Mapper\MapperAdaptorInterface;
+use Pyncer\Http\Server\RequestHandlerInterface;
 
 use const Pyncer\DATE_TIME_NOW as PYNCER_DATE_TIME_NOW;
 
@@ -22,6 +24,26 @@ class BearerAuthenticator extends AbstractBearerAuthenticator
     public function getGuestUserId(): ?int
     {
         return $this->guestUserId;
+    }
+
+    public function getResponse(
+        RequestHandlerInterface $handler
+    ): ?PsrResponseInterface
+    {
+        $response = parent::getResponse($handler);
+
+        // Ensure guest model gets set in case authenticate isn't called.
+        if ($this->userModel === null &&
+            $this->guestUserModel === null &&
+            $this->guestUserId !== null
+        ) {
+            $this->guestUserModel = $this->userMapperAdaptor->getMapper()->selectById(
+                $this->guestUserId,
+                $this->userMapperAdaptor->getMapperQuery()
+            );
+        }
+
+        return $response;
     }
 
     public function authenticate(string $token): bool
