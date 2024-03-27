@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.1.1 - 2024-03-27
+
+### Fixed
+
+- Removed redundant set guest user code.
+
 ## 1.1.0 - 2023-06-14
 
 ### Added

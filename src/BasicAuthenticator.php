@@ -29,11 +29,8 @@ class BasicAuthenticator extends AbstractBasicAuthenticator
     {
         $response = parent::getResponse($handler);
 
-        // Ensure guest model gets set in case authenticate isn't called.
-        if ($this->userModel === null &&
-            $this->guestUserModel === null &&
-            $this->guestUserId !== null
-        ) {
+        // Set guest model if no user model
+        if ($this->userModel === null && $this->guestUserId !== null) {
             $this->guestUserModel = $this->userMapperAdaptor->getMapper()->selectById(
                 $this->guestUserId,
                 $this->userMapperAdaptor->getMapperQuery()
@@ -54,13 +51,6 @@ class BasicAuthenticator extends AbstractBasicAuthenticator
         );
 
         if (!$userModel) {
-            if ($this->guestUserId) {
-                $this->guestUserModel = $this->userMapperAdaptor->getMapper()->selectById(
-                    $this->guestUserId,
-                    $this->userMapperAdaptor->getMapperQuery()
-                );
-            }
-
             return false;
         }
 
