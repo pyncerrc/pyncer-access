@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.1.3 - 2026-06-16
+
+### Fixed
+
+- Added missing getToken() method to BearerAuthenticatorInterface.
+
 ## 1.1.2 - 2025-08-08
 
 ### Changed
